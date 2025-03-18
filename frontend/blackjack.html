@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>BLACKJACK!</title>
+        <link rel="stylesheet" type="text/css" href="blackjackstyle.css">
+        <script src="code.js"></script>
+    </head>
+    <body onload="main()">
+        <div id="background">
+        </div>
+        <div id="navbar">
+            <a href="home.html">HOME</a>
+            <a href="info.html">INFO</a>
+        </div>
+        <h2 id="playerhand">You Have:</h2>
+        <h2 id="dealerhand">Dealer Showing:</h2>
+        <div id="dealercards">
+            <img id="dealer1" src="assets/card back.png" />
+            <img id="dealer2" src="assets/card back.png" />
+        </div>
+        <div id="playercards">
+            <img id="player1" src="assets/card back.png" />
+            <img id="player2" src="assets/card back.png" />
+        </div>
+        <div id="bet">
+            <input id="betInput" type="number" placeholder = "Enter Bet"/>
+        </div>
+        <div id="credits">Current Credits:</div>
+        <button id="hitbutton" type="button" onclick="playerHit()"><b>HIT</b></button>
+        <button id="standbutton" type="button" onclick="playerStand()"><b>STAND</b></button>
+        <button id="betbutton" type = "button" onclick="gameStart()"><b>BET</b></button>
+    </body>
+</html>
