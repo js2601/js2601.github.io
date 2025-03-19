@@ -12,7 +12,7 @@ var originalState;
 var betInput;
 var credits = 1000;
 var playedTheseGamesBefore = 0;
-var canhit = 1;
+var canHit = 1;
 let betValue;
 var gameStarted;
 var deck = ["AC","KC","QC","JC","10C","9C","8C","7C","6C","5C","4C","3C","2C","AD","KD","QD","JD","10D","9D","8D","7D","6D","5D","4D","3D",
@@ -26,11 +26,11 @@ async function populateMap() {
         if (card[0] == 'A') {
             values.set(card,11);
         }
-        else if (card[0] ==='K' || card[0] === 'Q' || card[0] === 'J' || (card.substring(0,1) === '10')) {
+        else if (card[0] ==='K' || card[0] === 'Q' || card[0] === 'J' || (card.substring(0,2) === "10")) {
             values.set(card,10);
         }
         else {
-            values.set(card,Number(card, Number(card[0])));
+            values.set(card, Number(card[0]));
         }
     }
 }
@@ -42,33 +42,33 @@ async function drawCard() {
 
 async function makeHands() {
     for (let i = 0; i<2;i++){
-        let card = drawCard();
-        player.concat(card);
-        deck.splice(deck.find(card),1);
+        let card = await drawCard();
+        player.push(card);
+        deck.splice(deck.indexOf(card),1);
     }
     for (let i = 0; i<2;i++){
-        let card = drawCard();
-        dealer.concat(card);
-        deck.splice(deck.find(card),1);
+        let card = await drawCard();
+        dealer.push(card);
+        deck.splice(deck.indexOf(card),1);
     }
+    console.log("deck:");
+    console.log(deck);
 }
 
 async function showPlayerHand() {
-    player1.src = 'assets/${player[0]}.png'
-    player2.src = 'assets/${player[1]}.png'
+    // console.log(player);
+    player1.src = `assets/${player[0]}.png`
+    player2.src = `assets/${player[1]}.png`
     let handvalue = await getHandValue(player);
     playertext.innerHTML = "You Have: " + handvalue;
-
 }
 
 async function showDealerCard(card) {
-        var response = await fetchWithRetry(url);
-        console.log(response);
         if (card == 0) {
-            dealer1.src = 'assets/${dealer[0]}.png';
+            dealer1.src = `assets/${dealer[0]}.png`;
         }
         else if (card == 1) {
-            dealer2.src = 'assets/${dealer[1]}.png';
+            dealer2.src = `assets/${dealer[1]}.png`;
         }
         let total = 0;
         if (card == 0) {
@@ -101,12 +101,12 @@ async function updateCredits() {
 
 async function playerHit() {
     if (canHit) {
-            var card = drawCard();
-            player.concat(card);
-            deck.splice(deck.find(card),1);           
+            var card = await drawCard();
+            player.push(card);
+            deck.splice(deck.indexOf(card),1);       
             var node = playercards.lastElementChild
             var clone = node.cloneNode(true);
-            clone.src = 'assets/${card}.png';
+            clone.src = `assets/${card}.png`;
             let nodeLeft = window.getComputedStyle(node).left;
             let nodeTop = window.getComputedStyle(node).top;
             clone.style.left = (parseFloat(nodeLeft) + 17.7) + "px";
@@ -118,19 +118,19 @@ async function playerHit() {
 }
 
 async function dealerHit() {
-        var card = drawCard();
-        dealer.concat(card);
-        deck.splice(deck.find(card),1);     
+        var card = await drawCard();
+        dealer.push(card);
+        deck.splice(deck.indexOf(card),1);    
         var node = dealercards.lastElementChild
         var clone = node.cloneNode(true);
-        clone.src = response.cards[0].image;
+        clone.src = `assets/${card}.png`;
         let nodeLeft = window.getComputedStyle(node).left;
         let nodeTop = window.getComputedStyle(node).top;
         clone.style.left = (parseFloat(nodeLeft) + 17.7) + "px";
         clone.style.top = (parseFloat(nodeTop) + 12.5) + "px";
         dealercards.appendChild(clone);
         await showDealerCard(2);
-        checkBust("dealerhand");
+        checkBust(dealer);
 }
 
 async function checkBust(hand) {
@@ -143,20 +143,59 @@ async function checkBust(hand) {
     }
     else if (Number(value) > 21 && hand == dealer) {
         credits = Number(credits) + Number(betValue);
+        console.log(credits);
         await delay(1000);
         document.body = originalState;
         main();
     }
 }
 
+async function playerStand() {
+    canHit = 0;
+    await showDealerCard(1);
+    while (await getHandValue(dealer) < 17) {
+        await delay(1000);
+        await dealerHit();
+        console.log(await getHandValue(dealer))
+    }
+    let playerValue = await getHandValue(player);
+    let dealerValue = await getHandValue(dealer);
+
+    if (playerValue > dealerValue) {
+        credits = Number(credits) + Number(betValue);
+        await delay(1000);
+        document.body = originalState;
+        main();
+    }
+    else if (playerValue < dealerValue) {
+        credits = Number(credits) - Number(betValue);
+        await delay(1000);
+        document.body = originalState;
+        main();
+    }
+    else {
+        await delay(1000);
+        document.body = originalState;
+        main();
+    }
+}
+
+
 async function resetDeck() {
+    deck = deck.concat(player);
+    deck = deck.concat(dealer);
+    player = [];
+    dealer = [];
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function main() {
     originalState = document.body.cloneNode(true);
     console.log(originalState);
     betValue = 0;
-    canHit = 1;
     gameStarted = 0;
     dealer1 = document.getElementById("dealer1");
     dealer2 = document.getElementById("dealer2");
@@ -176,6 +215,7 @@ async function gameStart() {
         betValue = betInput.value;
         console.log("betValue "+betValue)
         gameStarted = 1;
+        await resetDeck();
         await populateMap();
         await makeHands();
         await showPlayerHand();
@@ -193,5 +233,6 @@ async function gameStart() {
             document.body = originalState;
             main();
         }
+        canHit = 1;
     }
 }
