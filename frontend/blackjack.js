@@ -12,7 +12,7 @@ var originalState;
 var betInput;
 var credits = 1000;
 var playedTheseGamesBefore = 0;
-var canHit = 1;
+var canHit = 0;
 let betValue;
 var gameStarted;
 var deck = ["AC","KC","QC","JC","10C","9C","8C","7C","6C","5C","4C","3C","2C","AD","KD","QD","JD","10D","9D","8D","7D","6D","5D","4D","3D",
