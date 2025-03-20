@@ -130,7 +130,7 @@ async function dealerHit() {
         clone.style.top = (parseFloat(nodeTop) + 12.5) + "px";
         dealercards.appendChild(clone);
         await showDealerCard(2);
-        checkBust(dealer);
+        await checkBust(dealer);
 }
 
 async function checkBust(hand) {
@@ -220,13 +220,13 @@ async function gameStart() {
         await makeHands();
         await showPlayerHand();
         await showDealerCard(0);
-        if (await getHandValue("playerhand") == 21) {
+        if (await getHandValue(player) == 21) {
             credits = Number(credits) + 1.5*Number(betValue);
             await delay(1000);
             document.body = originalState;
             main();
         }
-        else if (await getHandValue("dealerhand") == 21) {
+        else if (await getHandValue(dealer) == 21) {
             showDealerCard(1);
             credits = Number(credits) - Number(betValue);
             await delay(1000);
