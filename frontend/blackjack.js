@@ -136,6 +136,7 @@ async function dealerHit() {
 async function checkBust(hand) {
     let value = await getHandValue(hand);
     if (Number(value) > 21 && hand == player) {
+        canHit = 0;
         credits = Number(credits) - Number(betValue);
         await delay(1000);
         document.body = originalState;
