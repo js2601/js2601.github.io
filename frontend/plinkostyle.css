@@ -1,0 +1,47 @@
+button {
+    position: absolute;
+    width: 15%;
+    height: 10%;
+    top: 50%;
+    background-color: lime;
+    border-width: 0;
+    font-size: 50;
+}
+
+button:hover {
+    cursor: pointer;
+}
+canvas {
+    position:absolute;
+    top:0%;
+    left:0%;
+    width: 100%;
+    z-index: -1;
+}
+
+div {
+    position: absolute;
+    font-size: 50px;
+    color: white;
+}
+
+#betInput{
+    position: absolute;
+    top:40%;
+    font-size: 50px;
+    color: black;
+    width: 15%;
+    text-align: center;
+}
+
+#credits {
+    width: 99%;
+    text-align: right;
+    color:black;
+}
+
+a {
+    position:absolute;
+    font-size: 50px;
+    z-index: 1;
+}

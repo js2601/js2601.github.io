@@ -212,7 +212,7 @@ async function main() {
 }
 
 async function gameStart() {
-    if (betInput.value != 0 && betInput.value <= credits && !gameStarted) {
+    if (betInput.value != 0 && betInput.value <= credits && betInput.value >=0 && !gameStarted) {
         betValue = betInput.value;
         console.log("betValue "+betValue)
         gameStarted = 1;
