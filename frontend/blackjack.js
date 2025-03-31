@@ -109,7 +109,7 @@ async function playerHit() {
             clone.src = `assets/${card}.png`;
             let nodeLeft = window.getComputedStyle(node).left;
             let nodeTop = window.getComputedStyle(node).top;
-            clone.style.left = (parseFloat(nodeLeft) + 17.7) + "px";
+            clone.style.left = (parseFloat(nodeLeft) + 17.75) + "px";
             clone.style.top = (parseFloat(nodeTop) + 12.5) + "px";
             playercards.appendChild(clone);
             await showPlayerHand();
@@ -126,7 +126,7 @@ async function dealerHit() {
         clone.src = `assets/${card}.png`;
         let nodeLeft = window.getComputedStyle(node).left;
         let nodeTop = window.getComputedStyle(node).top;
-        clone.style.left = (parseFloat(nodeLeft) + 17.7) + "px";
+        clone.style.left = (parseFloat(nodeLeft) + 10) + "px";
         clone.style.top = (parseFloat(nodeTop) + 12.5) + "px";
         dealercards.appendChild(clone);
         await showDealerCard(2);
@@ -207,7 +207,7 @@ async function main() {
     dealertext = document.getElementById("dealerhand");
     playertext = document.getElementById("playerhand");
     credittext = document.getElementById("credits");
-    betInput = document.getElementById("betInput");
+    betInput = document.getElementById("blackjackBetInput");
     updateCredits();
 }
 

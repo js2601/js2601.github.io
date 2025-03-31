@@ -1,9 +1,10 @@
 //define constants
 
-const ballSize = 8;
+const ballSize = 10;
 const pegSize = 7;
 const pegAmt = 11;
 const multWidth = 50;
+const bounciness = 0.5;
 var credits = 1000;
 //Init Physics Engine
 
@@ -18,7 +19,7 @@ var render = Render.create({
         width: 1000,
         height: 520,
         wireframes: false,
-        background: 'white'
+        background: 'teal'
     }
 });
 
@@ -35,13 +36,14 @@ function randInt(min, max) {
 
 function createMults() {
     for (let i = 0; i<13; i++) {
-        var mult = Bodies.rectangle(200+50*i,454,multWidth,30, { isStatic: true, render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        if (Math.abs(6 - i) == 6) mult.label = "collision_12.0";
-        else if (Math.abs(6 - i) == 5) mult.label = "collision_6.0"
-        else if (Math.abs(6 - i) == 4) mult.label = "collision_2.0"
-        else if (Math.abs(6 - i) == 3) mult.label = "collision_1.2"
-        else if (Math.abs(6 - i) == 2) mult.label = "collision_1.0"
-        else mult.label = "collision_0.5"
+        var mult;
+        if (Math.abs(6 - i) == 6) mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_6.0", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        else if (Math.abs(6 - i) == 5) mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_4.0", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        else if (Math.abs(6 - i) == 4)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_1.6", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        else if (Math.abs(6 - i) == 3)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_1.2", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        else if (Math.abs(6 - i) == 2)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.7", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        else if (Math.abs(6-i) == 1)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.5", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        else var mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.0",render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
         World.add(engine.world, mult);
     }
 }
@@ -51,7 +53,7 @@ function createPegs(rowNum) {
     for (i = 1; i<rowNum; i++) {
         for (let j = 0; j < i+2; j ++) {
             var peg = Bodies.circle(475+50*j-25*i,15+37*i, pegSize,
-                {isStatic: true, render: {fillStyle: 'white', strokeStyle: 'black', lineWidth: 1}});
+                {isStatic: true, restitution: bounciness, render: {fillStyle: 'white', strokeStyle: 'black', lineWidth: 1}});
             World.add(engine.world,peg)
         }
     }
@@ -67,12 +69,13 @@ function deleteBall(ball,mult) {
 }
 
 function dropBall(){
-    let betAmt = document.getElementById("betInput").value;
+    let betAmt = document.getElementById("plinkoBetInput").value;
     if (betAmt > 0 && betAmt <= credits){
-    var ball = Bodies.circle(500 + randInt(-25,25), 0, ballSize, {
+    var ball = Bodies.circle(500 + randInt(-50,50), 0, ballSize, {
         render: { fillStyle: 'red'},
         label: "ball_"+ betAmt,
-        collisionFilter: {group: -1}
+        collisionFilter: {group: -1},
+        restitution: bounciness
     });
     console.log(ball.label);
     credits -= Number(betAmt);
@@ -103,12 +106,13 @@ function draw() {
     ctx.fillStyle = 'black';
     ctx.textAlign = 'center';
     for (let i = 0; i<13; i++) {
-        if (Math.abs(6 - i) == 6) ctx.fillText("12.0", 200 + 50*i, 460);
-        else if (Math.abs(6 - i) == 5) ctx.fillText("6.0", 200 + 50*i, 460);
-        else if (Math.abs(6 - i) == 4) ctx.fillText("2.0", 200 + 50*i, 460);
+        if (Math.abs(6 - i) == 6) ctx.fillText("6.0", 200 + 50*i, 460);
+        else if (Math.abs(6 - i) == 5) ctx.fillText("4.0", 200 + 50*i, 460);
+        else if (Math.abs(6 - i) == 4) ctx.fillText("1.60", 200 + 50*i, 460);
         else if (Math.abs(6 - i) == 3) ctx.fillText("1.20", 200 + 50*i, 460);
-        else if (Math.abs(6 - i) == 2) ctx.fillText("1.0", 200 + 50*i, 460);
-        else ctx.fillText("0.5", 200 + 50*i, 460);
+        else if (Math.abs(6 - i) == 2) ctx.fillText("0.7", 200 + 50*i, 460);
+        else if (Math.abs(6-i) == 1) ctx.fillText("0.5", 200 + 50*i, 460);
+        else ctx.fillText("0.0", 200 + 50*i, 460);
     }
   }
 

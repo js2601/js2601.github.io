@@ -1,0 +1,249 @@
+a {
+    position:absolute;
+    font-size: 50px;
+    z-index: 1;
+    font-family: 'Brush Script MT', cursive;
+    color: white;
+}
+
+body {
+    background-color: white;
+}
+
+button {
+    position: absolute;
+    width: 230.4;
+    height: 72.036;
+    border: 1px;
+    border-radius: 500px;
+    font-size: 50px;
+    color: #FFFFFF;
+    font-family: 'Brush Script MT', cursive;
+}
+
+button:hover {
+    background-color: #3d8462;
+    cursor: pointer;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+canvas {
+    position:absolute;
+    top:0%;
+    left:0%;
+    width: 100%;
+    z-index: -1;
+}
+
+div {
+    position: absolute;
+    font-size: 50px;
+    color: white;
+    font-family: 'Brush Script MT', cursive;
+}
+
+h1 {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 100px;
+    font-family: 'Brush Script MT', cursive;
+}
+
+h2 {
+    width: 99%;
+    text-align: center;
+    font-size: 50px;
+    color: #FFFFFF;
+    position: absolute;
+    font-family: 'Brush Script MT', cursive;
+}
+
+img {
+    position: absolute;
+}
+
+input {
+    font-family: 'Brush Script MT', cursive;
+}
+
+p {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 50px;
+}
+
+#blackjacklogo {
+    border-radius: 25%;
+    width: 250px;
+    height: 250px;
+}
+
+#blackjacklogo:hover {
+    transition-duration: 50ms;
+    border-color: black;
+    border-style: solid;
+}
+
+
+#plinkologo {
+    border-radius: 25%;
+    width: 250px;
+    height: 250px;
+}
+
+#plinkologo:hover {
+    transition-duration: 50ms;
+    border-color: black;
+    border-style: solid;
+}
+
+
+#blackjacklink {
+    left: 50px;
+    top: 200px;
+}
+
+#plinkolink {
+    left: 350px;
+    top: 200px;
+}
+
+#mainscreentitle {
+    background-color: teal;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 150px;
+    font-size: 110px;
+    text-align: left;
+    text-indent: 10px;
+}
+
+/* Blackjack */
+
+#hitbutton {
+    background-color: #0a5555;
+    right: 384px;
+    top: 400px;
+}
+
+#standbutton {
+    background-color: #0a5555;
+    right: 144px;
+    top: 400px;
+}
+
+#betbutton {
+    background-color: #0a5555;
+    right: 264px;
+    top: 325px;
+}
+
+#dealerhand {
+    top: -25px;
+}
+
+#playerhand {
+    top: 375px;
+}
+
+#bet {
+    right: 235.2px;
+    top: 250px;
+    width: 288px;
+}
+
+#blackjackBetInput {
+    background-color: #0a5555;
+    color: #FFFFFF;
+    font-size: 45px;
+    text-align: center;
+    width: 100%;
+}
+
+#betInput::-webkit-inner-spin-button,
+#betInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#betInput::placeholder {
+    color: #FFFFFF;
+}
+
+#playercards {
+    width: 99%;
+}
+
+#dealercards {
+    width:99%;
+}
+
+#credits {
+    width: 99%;
+    text-align:right;
+    color: #FFFFFF;
+}
+
+#blackjackbackground {
+    text-align: center;
+    z-index: -1;
+    background-color: #008080;
+
+}
+
+#dealer1{
+    position: absolute;
+    left: 46%;
+    top: 120px;
+    width: 150;
+    height: 217.8;
+    transform-origin: 0% 0%;
+}
+
+#dealer2{
+    position: absolute;
+    left: 47%;
+    top: 132.5px;
+    width: 150;
+    height: 217.8;
+    transform-origin: 0% 0%;
+}
+
+#player1{
+    position: absolute;
+    left: 46%;
+    top: 500px;
+    width: 150;
+    height: 217.8;
+    transform-origin: 0% 0%;
+}
+
+#player2{
+    position: absolute;
+    left: 47%;
+    top: 512.5px;
+    width: 150;
+    height: 217.8;
+    transform-origin: 0% 0%;
+}
+
+/* Plinko */
+
+#plinkoBetInput{
+    position: absolute;
+    top:40%;
+    font-size: 50px;
+    color: black;
+    width: 15%;
+    text-align: center;
+}
+
+#dropButton {
+    background-color: #0a5555;
+    top:50%;
+    width: 15%;
+}
