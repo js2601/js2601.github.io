@@ -1,16 +1,17 @@
 var fs = require('fs')
-var data = {}
-
-data.push({user: 1, balance: 3})
-let json = JSON.stringify(data)
-fs.writeFile('data.json', json, 'utf8', callback)
+var data = []
 
 module.exports = {
     getBalance: function(user) {
-        let json = fs.readFile('../data.json')
-        let data = JSON.parse(json);
 
-        let foundArray = data.find(({username}) => username === user)
-        return foundUser.info.balance;
+        const path = require("path");
+        const aPath = path.resolve(__dirname, '../data.json')
+        const fileData = JSON.parse(fs.readFileSync(aPath, 'utf8'))
+
+        let foundArray = fileData.find(({ username }) => {
+            return username === user
+        })
+        
+        return foundArray;
     }
 }
