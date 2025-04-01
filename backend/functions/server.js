@@ -1,10 +1,9 @@
-import express from "express";
-import serverless from "serverless-http";
-
+const express = require('express');
+const serverless = require('serverless-http')
 const app = express();
 
 const usersRoute = require('./routes/user')
 
 app.use('/users', usersRoute)
 
-export const handler = serverless(app)
+exports.handler = serverless(app)
