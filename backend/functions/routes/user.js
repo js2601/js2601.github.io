@@ -1,6 +1,6 @@
-const express = require('express');
-const tools = require('./tools')
-const router = express.Router();
+import express, { Router } from "express";
+
+const router = Router();
 
 router.get('/:username', (req, res) => {
     res.status(200).send(tools.getBalance(req.params.username))
