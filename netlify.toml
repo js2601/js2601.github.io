@@ -2,6 +2,7 @@
   functions = "backend/functions"
 [functions]
   external_node_modules = ["express", "serverless-http"]
+  included_files = ["backend/data.json"]
   node_bundler = "esbuild"
 [[redirects]]
   force = true
