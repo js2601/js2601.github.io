@@ -7,4 +7,4 @@
   force = true
   from = "/users/*"
   status = 200
-  to = "/.netlify/functions/"
+  to = "/.netlify/functions/server"
