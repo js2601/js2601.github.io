@@ -6,4 +6,4 @@
   force = true
   from = "/users/*"
   status = 200
-  to = "/backend/functions/users/:splat"
+  to = "/.netlify/functions/"
