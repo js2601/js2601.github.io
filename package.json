@@ -1,15 +1,15 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "test": "node server.js"
+    "test": "node server.js",
+    "start": "node backend/server.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0",
-    "serverless-http": "^3.2.0"
+    "express": "^5.1.0"
   }
 }

@@ -1,14 +1,15 @@
 const express = require('express');
-const serverless = require('serverless-http')
 const app = express();
+const port = 3000;
 
 const usersRoute = require('./routes/user.js')
 const setbalRoute = require('./routes/setbal.js')
 const addUserRoute = require('./routes/adduser.js')
 
-app.use('/users', usersRoute)
-app.use('/users', setbalRoute)
-app.use('/users', addUserRoute)
+app.use('/', usersRoute)
+app.use('/', setbalRoute)
+app.use('/', addUserRoute)
 
-
-exports.handler = serverless(app)
+app.listen(3000, () => {
+    console.log(`App listening on port ${port}`)
+  })
