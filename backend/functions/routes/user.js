@@ -7,6 +7,8 @@ router.get('/:username', (req, res) => {
     const aPath = path.resolve(__dirname, '../data.json')
     const fileData = JSON.parse(fs.readFileSync(aPath, 'utf8'));
 
+    const user = req.params.username;
+
     let foundArray = fileData.find(({ username }) => {
         return username === user;
     })
