@@ -7,6 +7,8 @@ router.get('/:username/updatebal/:bal', (req, res) => {
     const aPath = path.resolve(__dirname, '../data.json')
     const fileData = JSON.parse(fs.readFileSync(aPath, 'utf8'));
 
+    const user = req.params.username;
+
     let index = fileData.findIndex(({ username }) => {
         return username === user;
     })

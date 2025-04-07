@@ -14,13 +14,13 @@ router.get('/adduser/:username', (req, res) => {
     fs.writeFile(aPath, json, (err) => {
         if (err) {
             console.error(err);
-            return;
+            return;ß
         }
 
         console.log(`User ${newUser} added successfully`);
     })
 
-    res.send(200).send({ status: "success" });
+    res.send(200).json({ status: "success" });
 })
 
 module.exports = router;
