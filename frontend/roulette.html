@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../style.css">
+        <script src="roulette.js" defer></script>
+    </head>
+    <body id="roulettebody" onload="main()">
+        <a href="../index.html">HOME</a>
+        <div id="credits">Credits:</div>
+        <input id="plinkoBetInput" type="number" step = 1 placeholder = "Enter Bet"/>
+        <canvas id="roulettecanvas" width="1920" height="1000"></canvas>
+        <button type="button" id= "rollButton" onclick="spinWheel()">SPIN</button>
+        <button type="button" id= "chipButton" onclick="addChip()">BET</button>
+    </body>
+</html>
