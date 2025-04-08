@@ -1,11 +1,10 @@
 const express = require('express')
 const fs = require('fs')
+const tools = require('./tools.js')
 const router = express.Router();
 
-router.get('/:username/updatebal/:bal', (req, res) => {
-    const path = require("path");
-    const aPath = path.resolve(__dirname, '../data.json')
-    const fileData = JSON.parse(fs.readFileSync(aPath, 'utf8'));
+router.get('/updatebal/:username/:bal', (req, res) => {
+    const fileData = tools.readData();
 
     const user = req.params.username;
     const bal = req.params.bal;
@@ -23,7 +22,7 @@ router.get('/:username/updatebal/:bal', (req, res) => {
             return;
         }
 
-        console.log(`Balance updated for ${filedata[index].username} to ${bal}`);
+        console.log(`Balance updated for ${fileData[index].username} to ${bal}`);
     })
 
     res.send(200).send({ status: "success" });

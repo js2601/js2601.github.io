@@ -1,11 +1,10 @@
 const express = require('express')
 const fs = require('fs')
+const tools = require('./tools.js')
 const router = express.Router();
 
 router.get('/adduser/:username', (req, res) => {
-    const path = require("path");
-    const aPath = path.resolve(__dirname, '../data.json')
-    const fileData = JSON.parse(fs.readFileSync(aPath, 'utf8'));
+    const fileData = tools.readData();
 
     const newUser = req.params.username;
     
