@@ -9,7 +9,7 @@ function readData() {
         }
 
         return JSON.parse(data);
-    });ß
+    });
 
     
 }
