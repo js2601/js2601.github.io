@@ -1,3 +1,4 @@
+const fs = require('fs')
 function readData() {
     const path = require("path");
     const aPath = path.resolve(__dirname, '../data.json')
