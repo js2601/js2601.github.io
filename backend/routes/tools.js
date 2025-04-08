@@ -8,11 +8,9 @@ function readData() {
         }
 
         return JSON.parse(data);
-    });
+    });ß
 
     
 }
 
-module.exports = {
-    findIndex: findIndex,
-}
+module.exports = { readData }
