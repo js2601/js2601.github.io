@@ -1,4 +1,5 @@
 const express = require('express')
+const fs = require('fs')
 const router = express.Router();
 
 router.get('/:username', (req, res) => {
