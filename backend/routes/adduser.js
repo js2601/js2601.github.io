@@ -18,20 +18,25 @@ function createUser(newUser, path, fileData) {
 
 router.get('/adduser/:username', (req, res) => {
     const path = require("path");
-    const aPath = path.resolve(__dirname, '../data.json')
+    const aPath = path.resolve(__dirname, '../data.json');
 
-    fs.readFile(aPath, 'utf-8', (err, fileData) => {
+    fs.readFile(aPath, 'utf-8', (err, data) => {
         if (err) {
             console.log(err)
-            res.send({ status: "failure", error: err})
+            res.send({ success: false, error: err })
+            return;
+        }
+        const newUser = req.params.username;
+        let fileData = JSON.parse(data);
+        
+        if (fileData.some(userData => userData.username === newUser)) {
+            res.send({ success: false, error: "user already exists"});
             return;
         }
 
-        const newUser = req.params.username
+        createUser(newUser, aPath, fileData);
 
-        createUser(newUser, aPath, fileData)
-
-        res.send(200).send({ status: "success", message: `added user ${newUser}` });
+        res.status(200).send({ success: true, message: `added user ${newUser}` });
 
     });
 })

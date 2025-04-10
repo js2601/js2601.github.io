@@ -5,18 +5,24 @@ const router = express.Router();
 router.get('/:username', (req, res) => {
     const path = require("path");
     const aPath = path.resolve(__dirname, '../data.json')
-    fs.readFile(aPath, 'utf-8', (err, fileData) => {
+    fs.readFile(aPath, 'utf-8', (err, data) => {
         if (err) {
             console.error(err);
-            res.send({ status: "failure", error: err})
+            res.send({ success: false, error: err });
             return;
         }
 
+        const fileData = JSON.parse(data);
         const user = req.params.username;
 
         let foundArray = fileData.find(({ username }) => {
             return username === user;
-        })
+        });
+
+        if (foundArray === undefined) {
+            res.send({ success: false, error: "user does not exist"});
+            return;
+        }
 
         res.status(200).send(foundArray);
 
