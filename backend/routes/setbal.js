@@ -9,6 +9,7 @@ router.get('/updatebal/:username/:bal', (req, res) => {
     fs.readFile(aPath, 'utf-8', (err, fileData) => {
         if (err) {
             console.error(err);
+            res.send({ status: "failure", error: err})
             return;
         }
         const user = req.params.username;
@@ -30,7 +31,7 @@ router.get('/updatebal/:username/:bal', (req, res) => {
             console.log(`Balance updated for ${fileData[index].username} to ${bal}`);
         })
 
-        res.send(200).send({ status: "success" });
+        res.send(200).send({ status: "success", message: `set balance of ${user} to ${bal}` });
 
     });
 })

@@ -8,6 +8,7 @@ router.get('/:username', (req, res) => {
     fs.readFile(aPath, 'utf-8', (err, fileData) => {
         if (err) {
             console.error(err);
+            res.send({ status: "failure", error: err})
             return;
         }
 

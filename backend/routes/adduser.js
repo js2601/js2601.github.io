@@ -22,13 +22,16 @@ router.get('/adduser/:username', (req, res) => {
 
     fs.readFile(aPath, 'utf-8', (err, fileData) => {
         if (err) {
-            console.error(err);
+            console.log(err)
+            res.send({ status: "failure", error: err})
             return;
         }
 
+        const newUser = req.params.username
+
         createUser(newUser, aPath, fileData)
 
-        res.send(200).json({ status: "success" });
+        res.send(200).send({ status: "success", message: `added user ${newUser}` });
 
     });
 })
