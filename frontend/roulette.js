@@ -18,6 +18,7 @@ let ballSpinSpeed = baseSpinSpeed;
 let ballPos = 0;
 let ballAccel = 0;
 let mousePos = [];
+let betAmt;
 var placingChip = false;
 const wheelAdjust = 61;
 var boardCoords= [];
@@ -34,6 +35,7 @@ function main() {
 
 function draw() {
     ctx.fillStyle = 'teal';
+    betAmt = document.getElementById("rouletteBetInput").value;
     ctx.fillRect(0,0,width,height);
     animateWheel();
     animateBall(ballPos);
@@ -233,7 +235,6 @@ function addChip() {
 }
 
 function animateChip() {
-    let betAmt = document.getElementById("rouletteBetInput").value;
     if (placingChip && betAmt > 0 && betAmt <= credits) {
         ctx.beginPath();
         ctx.fillStyle = '#87CEEB';
@@ -253,16 +254,15 @@ function animateChip() {
 }
 
 function placeChip() {
-    let betAmt = document.getElementById("rouletteBetInput").value;
     if (placingChip && (betAmt > 0 && betAmt <= credits)) {
         for (let coord of boardCoords) {
             let index = boardCoords.indexOf(coord);
             let coordDiff = [coord[0]-mousePos[0], coord[1] - mousePos[1]];
             let chip = coord;
-            chip.push(betAmt);
-            chip.push(index);
             if (index == 0) {
                 if (Math.abs(coordDiff[0]) < boardWidth/28 && Math.abs(coordDiff[1]) < boardHeight/2) {
+                    chip.push(betAmt);
+                    chip.push(index);
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -270,6 +270,8 @@ function placeChip() {
             }
             else if (index < 40) {
                 if (Math.abs(coordDiff[0]) < boardWidth/28 && Math.abs(coordDiff[1]) < boardHeight/6) {
+                    chip.push(betAmt);
+                    chip.push(index);
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -277,6 +279,8 @@ function placeChip() {
             }
             else if (index < 43) {
                 if (Math.abs(coordDiff[0]) < boardWidth/7 && Math.abs(coordDiff[1]) < boardHeight/6) {
+                    chip.push(betAmt);
+                    chip.push(index);
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -284,6 +288,8 @@ function placeChip() {
             }
             else {
                 if (Math.abs(coordDiff[0]) < boardWidth/12 && Math.abs(coordDiff[1]) < boardHeight/6) {
+                    chip.push(betAmt);
+                    chip.push(index);
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
