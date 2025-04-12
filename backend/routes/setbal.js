@@ -1,8 +1,9 @@
 const express = require('express')
 const fs = require('fs')
 const router = express.Router();
+const jwtAuth = require('./authorize.js');
 
-router.get('/setbal/:username/:bal', (req, res) => {
+router.get('/setbal/:bal', jwtAuth, (req, res) => {
     const path = require("path");
     const aPath = path.resolve(__dirname, '../data.json')
 
@@ -12,7 +13,7 @@ router.get('/setbal/:username/:bal', (req, res) => {
             res.send({ success: false, error: err})
             return;
         }
-        const user = req.params.username;
+        const user = req.user.username;
         const bal = req.params.bal;
         let fileData = JSON.parse(data);
 

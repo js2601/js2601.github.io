@@ -14,9 +14,39 @@ router.post('/register', (req, res) => {
         if (err) {
             console.error(err);
             res.send({success: false, error: err})
+            return;
         }
 
-        fs.readFile(aPath)
-        
+        fs.readFile(aPath, 'utf-8', (err, data) => {
+            if (err) {
+                console.error(error);
+                res.send({success: false, error: err})
+                return;
+            }
+
+            let fileData = JSON.parse(data);
+            let foundArray = fileData.find(({ user }) => {
+                return user === username;
+            });
+
+            if (foundArray === undefined) {
+                fileData.push({username: username, balance: 1000, password: hash});
+                let json = JSON.stringify(fileData);
+
+                fs.writeFile(aPath, json, (err) => {
+                    if (err) {
+                        console.error(error);
+                        res.send({success: false, error: err});
+                        return;
+                    }
+                })
+
+                res.send({success: true, message: `User ${username} successfully registered`});
+            } else {
+                res.send({success: false, error: `User ${username} already exists`});
+            }
+        })
     });
 })
+
+module.exports = router;
