@@ -77,8 +77,8 @@ p {
 
 #blackjacklogo {
     border-radius: 25%;
-    width: 250px;
-    height: 250px;
+    width: 375;
+    height: 375;
 }
 
 #blackjacklogo:hover {
@@ -90,8 +90,8 @@ p {
 
 #plinkologo {
     border-radius: 25%;
-    width: 250px;
-    height: 250px;
+    width: 375;
+    height: 375;
 }
 
 #plinkologo:hover {
@@ -102,8 +102,8 @@ p {
 
 #roulettelogo {
     border-radius: 25%;
-    width: 250px;
-    height: 250px;
+    width: 375;
+    height: 375;
 }
 
 #roulettelogo:hover {
@@ -114,17 +114,17 @@ p {
 
 
 #blackjacklink {
-    left: 50px;
+    left: 137.5;
     top: 200px;
 }
 
 #plinkolink {
-    left: 350px;
+    left: 562.5;
     top: 200px;
 }
 
 #roulettelink {
-    left: 650px;
+    left: 987.5;
     top: 200px;
     color: teal;
 }
@@ -136,7 +136,7 @@ p {
     width: 100%;
     height: 150px;
     font-size: 110px;
-    text-align: left;
+    text-align: center;
     text-indent: 10px;
 }
 

@@ -366,3 +366,4 @@ function checkWin() {
 function clearChips() {
     chipCoords = [];
 }
+

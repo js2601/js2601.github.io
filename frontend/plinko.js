@@ -1,6 +1,6 @@
 //define constants
 
-const ballSize = 10;
+const ballSize = 12;
 const pegSize = 7;
 const pegAmt = 11;
 const multWidth = 50;
@@ -30,20 +30,22 @@ Runner.run(runner, engine);
 //Plinko Functions
 
 function randInt(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
+    let randNum = Math.floor(Math.random() * (max - min) ) + min;
+    if (Math.abs(randNum) == 25 || randNum == 0) randNum+=1;
+    return randNum
 }
 
 
 function createMults() {
     for (let i = 0; i<13; i++) {
         var mult;
-        if (Math.abs(6 - i) == 6) mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_6.0", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        else if (Math.abs(6 - i) == 5) mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_4.0", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        else if (Math.abs(6 - i) == 4)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_1.6", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        else if (Math.abs(6 - i) == 3)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_1.2", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        else if (Math.abs(6 - i) == 2)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.7", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        else if (Math.abs(6-i) == 1)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.5", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
-        else var mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.0",render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'white'}});
+        if (Math.abs(6 - i) == 6) mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_6.0", render: {fillStyle: '#54f851', lineWidth: 2, strokeStyle: 'black'}});
+        else if (Math.abs(6 - i) == 5) mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_4.0", render: {fillStyle: '#75f871', lineWidth: 2, strokeStyle: 'black'}});
+        else if (Math.abs(6 - i) == 4)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_1.6", render: {fillStyle: '#a7f871', lineWidth: 2, strokeStyle: 'black'}});
+        else if (Math.abs(6 - i) == 3)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_1.2", render: {fillStyle: '#b7f871', lineWidth: 2, strokeStyle: 'black'}});
+        else if (Math.abs(6 - i) == 2)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.7", render: {fillStyle: '#e3f871', lineWidth: 2, strokeStyle: 'black'}});
+        else if (Math.abs(6-i) == 1)  mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.5", render: {fillStyle: '#f8e271', lineWidth: 2, strokeStyle: 'black'}});
+        else var mult = Bodies.rectangle(200+50*i,454,multWidth,30, {isStatic: true, label: "collision_0.0",render: {fillStyle: '#f87171', lineWidth: 2, strokeStyle: 'black'}});
         World.add(engine.world, mult);
     }
 }
@@ -70,19 +72,20 @@ function deleteBall(ball,mult) {
 
 function dropBall(){
     let betAmt = document.getElementById("plinkoBetInput").value;
-    if (betAmt > 0 && betAmt <= credits){
-    var ball = Bodies.circle(500 + randInt(-50,50), 0, ballSize, {
-        render: { fillStyle: 'red'},
-        label: "ball_"+ betAmt,
-        collisionFilter: {group: -1},
-        restitution: bounciness
-    });
-    console.log(ball.label);
-    credits -= Number(betAmt);
-    credits = Number(credits).toFixed(1);
-    console.log(credits);
-    document.getElementById("credits").innerHTML = "Credits: " + credits;
-    World.add(engine.world, ball);
+    if (betAmt > 0 && (credits-betAmt) >= 0){
+        credits -= Number(betAmt);
+        credits = Number(credits).toFixed(1);
+        var ball = Bodies.circle(500 + randInt(-48,48), 0
+        , ballSize, {
+            render: { fillStyle: 'red'},
+            label: "ball_"+ betAmt,
+            collisionFilter: {group: -1},
+            restitution: bounciness
+        });
+        console.log(ball.label);
+        
+        document.getElementById("credits").innerHTML = "Credits: " + credits;
+        World.add(engine.world, ball);
     }
 }
 
