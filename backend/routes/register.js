@@ -30,6 +30,16 @@ router.post('/register', (req, res) => {
 
             if (foundArray === undefined) {
                 data.push({username: username, balance: 1000, password: hash});
+                let json = JSON.stringify(data);
+                
+                fs.writeFile(aPath, json, (err) => {
+                    if (err) {
+                        console.error(error);
+                        res.send({success: false, error: err});
+                        return;
+                    }
+                })
+
                 res.send({success: true, message: `User ${username} successfully registered`});
             } else {
                 res.send({success: false, error: `User ${username} already exists`});
