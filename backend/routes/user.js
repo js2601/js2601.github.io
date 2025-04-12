@@ -1,6 +1,7 @@
 const express = require('express')
 const fs = require('fs')
 const router = express.Router();
+const jwtAuth = require('./authorize.js');
 
 router.get('/:username', (req, res) => {
     const path = require("path");
@@ -13,7 +14,7 @@ router.get('/:username', (req, res) => {
         }
 
         const fileData = JSON.parse(data);
-        const user = req.params.username;
+        const user = req.user.username;
 
         let foundArray = fileData.find(({ username }) => {
             return username === user;
