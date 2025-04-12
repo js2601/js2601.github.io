@@ -6,9 +6,10 @@
     <body id="roulettebody" onload="main()">
         <a href="../index.html">HOME</a>
         <div id="credits">Credits:</div>
-        <input id="plinkoBetInput" type="number" step = 1 placeholder = "Enter Bet"/>
+        <input id="rouletteBetInput" type="number" step = 1 placeholder = "Enter Bet" max="500"/>
         <canvas id="roulettecanvas" width="1920" height="1000"></canvas>
         <button type="button" id= "rollButton" onclick="spinWheel()">SPIN</button>
         <button type="button" id= "chipButton" onclick="addChip()">BET</button>
+        <button type="button" id= "clearButton" onclick="clearChips()">CLEAR</button>
     </body>
 </html>
