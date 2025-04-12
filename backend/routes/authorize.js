@@ -8,7 +8,7 @@ function jwtAuth(req, res, next) {
         return res.status(401).json({success: false, error: "Unauthorized"});
     }
 
-    jwt.verify(token, process.env.token, (err, decoded) => {
+    jwt.verify(token, 'test', (err, decoded) => {
         if (err) {
           return res.status(401).json({ error: 'Unauthorized' });
         }

@@ -24,14 +24,15 @@ router.post('/register', (req, res) => {
                 return;
             }
 
-            let foundArray = fileData.find(({ username }) => {
-                return username === user;
+            let fileData = JSON.parse(data);
+            let foundArray = fileData.find(({ user }) => {
+                return user === username;
             });
 
             if (foundArray === undefined) {
-                data.push({username: username, balance: 1000, password: hash});
-                let json = JSON.stringify(data);
-                
+                fileData.push({username: username, balance: 1000, password: hash});
+                let json = JSON.stringify(fileData);
+
                 fs.writeFile(aPath, json, (err) => {
                     if (err) {
                         console.error(error);

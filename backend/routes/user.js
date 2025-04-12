@@ -3,7 +3,7 @@ const fs = require('fs')
 const router = express.Router();
 const jwtAuth = require('./authorize.js');
 
-router.get('/:username', (req, res) => {
+router.get('/:username', jwtAuth, (req, res) => {
     const path = require("path");
     const aPath = path.resolve(__dirname, '../data.json')
     fs.readFile(aPath, 'utf-8', (err, data) => {
