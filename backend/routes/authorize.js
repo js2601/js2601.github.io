@@ -10,7 +10,7 @@ function jwtAuth(req, res, next) {
 
     jwt.verify(token, 'test', (err, decoded) => {
         if (err) {
-            console.error('JWT verify error:', err);
+            console.error('JWT verify error: ', err);
           return res.status(401).json({ error: 'Unauthorized' });
         }
         req.user = decoded;
