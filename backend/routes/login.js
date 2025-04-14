@@ -19,8 +19,8 @@ router.post('/login', (req, res) => {
         }
         
         let fileData = JSON.parse(data);
-        let foundArray = fileData.find(({ user }) => {
-            return user == username;
+        let foundArray = fileData.find(({ username: storedUser }) => {
+            return storedUser == username;
         });
 
         if (foundArray === undefined) {
