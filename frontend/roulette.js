@@ -263,6 +263,11 @@ function placeChip() {
                 if (Math.abs(coordDiff[0]) < boardWidth/28 && Math.abs(coordDiff[1]) < boardHeight/2) {
                     chip.push(betAmt);
                     chip.push(index);
+                    let dupe = findDupes(index);
+                    if (dupe != null) {
+                        chip[2] = Number(betAmt) + Number(chipCoords[dupe][2]);
+                        chipCoords.splice(dupe,1);
+                    }
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -272,6 +277,11 @@ function placeChip() {
                 if (Math.abs(coordDiff[0]) < boardWidth/28 && Math.abs(coordDiff[1]) < boardHeight/6) {
                     chip.push(betAmt);
                     chip.push(index);
+                    let dupe = findDupes(index);
+                    if (dupe != null) {
+                        chip[2] = Number(betAmt) + Number(chipCoords[dupe][2]);
+                        chipCoords.splice(dupe,1);
+                    }
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -281,6 +291,11 @@ function placeChip() {
                 if (Math.abs(coordDiff[0]) < boardWidth/7 && Math.abs(coordDiff[1]) < boardHeight/6) {
                     chip.push(betAmt);
                     chip.push(index);
+                    let dupe = findDupes(index);
+                    if (dupe != null) {
+                        chip[2] = Number(betAmt) + Number(chipCoords[dupe][2]);
+                        chipCoords.splice(dupe,1);
+                    }
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -290,6 +305,11 @@ function placeChip() {
                 if (Math.abs(coordDiff[0]) < boardWidth/12 && Math.abs(coordDiff[1]) < boardHeight/6) {
                     chip.push(betAmt);
                     chip.push(index);
+                    let dupe = findDupes(index);
+                    if (dupe != null) {
+                        chip[2] = Number(betAmt) + Number(chipCoords[dupe][2]);
+                        chipCoords.splice(dupe,1);
+                    }
                     chipCoords.push(chip);
                     placingChip = false;
                     break;
@@ -365,5 +385,15 @@ function checkWin() {
 
 function clearChips() {
     chipCoords = [];
+}
+
+
+function findDupes(coord) {
+    for (let chip of chipCoords) {
+        if (chip[3] == coord) {
+            return chipCoords.indexOf(chip);
+        }
+    }
+    return null;
 }
 
