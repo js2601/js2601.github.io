@@ -254,7 +254,8 @@ function animateChip() {
 }
 
 function placeChip() {
-    if (placingChip && (betAmt > 0 && betAmt <= credits)) {
+    console.log(Number(betAmt) + getChipSum());
+    if (placingChip && (betAmt > 0 && Number(betAmt) + getChipSum() <= credits)) {
         for (let coord of boardCoords) {
             let index = boardCoords.indexOf(coord);
             let coordDiff = [coord[0]-mousePos[0], coord[1] - mousePos[1]];
@@ -397,3 +398,10 @@ function findDupes(coord) {
     return null;
 }
 
+function getChipSum() {
+    let sum = 0;
+    for (chip of chipCoords) {
+        sum += Number(chip[2]);
+    }
+    return sum;
+}

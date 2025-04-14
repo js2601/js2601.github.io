@@ -1,4 +1,5 @@
 // Constants & Vars:
+const url = `https://js2601githubio-production.up.railway.app:8080/`
 var dealer1;
 var dealer2;
 var player1;
@@ -10,7 +11,7 @@ var playertext;
 var credittext;
 var originalState;
 var betInput;
-var credits = 1000;
+var credits;
 var playedTheseGamesBefore = 0;
 var canHit = 0;
 let betValue;
