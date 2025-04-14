@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
+const { errorMonitor } = require('stream');
 const router = express.Router();
 
 router.post('/register', (req, res) => {
@@ -19,14 +20,14 @@ router.post('/register', (req, res) => {
 
         fs.readFile(aPath, 'utf-8', (err, data) => {
             if (err) {
-                console.error(error);
+                console.error(err);
                 res.send({success: false, error: err})
                 return;
             }
 
             let fileData = JSON.parse(data);
-            let foundArray = fileData.find(({ user }) => {
-                return user === username;
+            let foundArray = fileData.find(({ username: storedUser }) => {
+                return storedUser === username;
             });
 
             if (foundArray === undefined) {
