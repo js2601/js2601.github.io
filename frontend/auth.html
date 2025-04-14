@@ -19,10 +19,16 @@
     <button id="submit-btn">Login</button>
     <div class="toggle" onclick="toggleForm()">Don't have an account? Register</div>
     <p id="status"></p>
+    <div id="log" style="margin-top: 10px; font-size: 0.9em; color: #ccc;"></div>
   </div>
 
   <script>
     let isRegister = false;
+
+    function log(msg) {
+      const el = document.getElementById('log');
+      el.innerHTML += `<div>> ${msg}</div>`;
+    }
 
     function toggleForm() {
       isRegister = !isRegister;
@@ -35,21 +41,24 @@
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
 
-      const url = 'https://js2601githubio-production.up.railway.app:8080'
-
+      const url = 'https://js2601githubio-production.up.railway.app';
       const route = isRegister ? '/register' : '/login';
-      const res = await fetch(`${url}${route}`, {
+
+      log(`Sending request to ${url + route}`);
+      const res = await fetch(`${url + route}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: user, password: pass })
       });
 
       const data = await res.json();
+      log(`Response: ${JSON.stringify(data)}`);
       document.getElementById('status').textContent = data.message || (res.ok ? 'Success' : 'Failed');
 
       if (res.ok && !isRegister && data.token) {
         localStorage.setItem('jwt', data.token);
-        window.location.href = 'index.html';
+        log('JWT stored in localStorage. Redirecting...');
+        window.location.href = 'frontend/';
       }
     });
   </script>
