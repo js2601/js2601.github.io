@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login / Register</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .container { background: #222; padding: 20px; border-radius: 8px; width: 300px; }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; }
+    button { cursor: pointer; }
+    .toggle { text-align: center; cursor: pointer; color: #0af; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="form-title">Login</h2>
+    <input id="username" type="text" placeholder="Username" required>
+    <input id="password" type="password" placeholder="Password" required>
+    <button id="submit-btn">Login</button>
+    <div class="toggle" onclick="toggleForm()">Don't have an account? Register</div>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    let isRegister = false;
+
+    function toggleForm() {
+      isRegister = !isRegister;
+      document.getElementById('form-title').textContent = isRegister ? 'Register' : 'Login';
+      document.getElementById('submit-btn').textContent = isRegister ? 'Register' : 'Login';
+      document.querySelector('.toggle').textContent = isRegister ? 'Already have an account? Login' : "Don't have an account? Register";
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', async () => {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      const route = isRegister ? '/register' : '/login';
+      const res = await fetch(route, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, password: pass })
+      });
+
+      const data = await res.json();
+      document.getElementById('status').textContent = data.message || (res.ok ? 'Success' : 'Failed');
+
+      if (res.ok && !isRegister && data.token) {
+        localStorage.setItem('jwt', data.token);
+        window.location.href = '';
+      }
+    });
+  </script>
+</body>
+</html>
