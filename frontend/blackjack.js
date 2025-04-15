@@ -11,7 +11,7 @@ var playertext;
 var credittext;
 var originalState;
 var betInput;
-var credits = 1000;
+var credits;
 var playedTheseGamesBefore = 0;
 var canHit = 0;
 let betValue;
@@ -195,12 +195,14 @@ async function checkBust(hand) {
     if (Number(value) > 21 && hand == player) {
         canHit = 0;
         credits = Number(credits) - Number(betValue);
+        updateBalance(credits);
         await delay(1000);
         document.body = originalState;
         main();
     }
     else if (Number(value) > 21 && hand == dealer) {
         credits = Number(credits) + Number(betValue);
+        updateBalance(credits);
         console.log(credits);
         await delay(1000);
         document.body = originalState;
@@ -221,12 +223,14 @@ async function playerStand() {
 
     if (playerValue > dealerValue) {
         credits = Number(credits) + Number(betValue);
+        updateBalance(credits);
         await delay(1000);
         document.body = originalState;
         main();
     }
     else if (playerValue < dealerValue) {
         credits = Number(credits) - Number(betValue);
+        updateBalance(credits);
         await delay(1000);
         document.body = originalState;
         main();
@@ -280,6 +284,7 @@ async function gameStart() {
         await showDealerCard(0);
         if (await getHandValue(player) == 21) {
             credits = Number(credits) + 1.5*Number(betValue);
+            updateBalance(credits);
             await delay(1000);
             document.body = originalState;
             await updateBalance(credits);
@@ -288,6 +293,7 @@ async function gameStart() {
         else if (await getHandValue(dealer) == 21) {
             showDealerCard(1);
             credits = Number(credits) - Number(betValue);
+            updateBalance(credits);
             await delay(1000);
             document.body = originalState;
             await updateBalance(credits);
