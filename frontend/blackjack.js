@@ -242,3 +242,8 @@ async function gameStart() {
         canHit = 1;
     }
 }
+
+window.main = main;
+window.playerHit = playerHit;
+window.playerStand = playerStand;
+window.gameStart = gameStart;

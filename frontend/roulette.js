@@ -408,3 +408,8 @@ function getChipSum() {
     }
     return sum;
 }
+
+window.main = main;
+window.spinWheel = spinWheel;
+window.addChip = addChip;
+window.clearChips = clearChips;

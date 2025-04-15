@@ -129,3 +129,5 @@ credits = await fetchBalance();
 document.getElementById("credits").innerHTML = "Credits: " + credits;
 createPegs(pegAmt);
 createMults();
+
+window.dropBall = dropBall;
