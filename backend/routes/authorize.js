@@ -1,3 +1,5 @@
+// JWT Authorization (for local storage)
+
 const jwt = require('jsonwebtoken');
 
 function jwtAuth(req, res, next) {
