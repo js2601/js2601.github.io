@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const port = process.env.PORT || 3000;
 const allowedIPs = ['185.199.108.153', '185.199.109.153', '185.199.110.153', 
   '185.199.111.153'];
 
-const usersRoute = require('./routes/user.js')
-const setbalRoute = require('./routes/setbal.js')
-const loginRoute = require('./routes/login.js')
-const registerRoute = require('./routes/register.js')
+const usersRoute = require('./backend/routes/user.js')
+const setbalRoute = require('./backend/routes/setbal.js')
+const loginRoute = require('./backend/routes/login.js')
+const registerRoute = require('./backend/routes/register.js')
 
 // app.use((req, res, next) => {
 //   const ip = req.ip;
@@ -20,10 +21,17 @@ const registerRoute = require('./routes/register.js')
 // })
 
 app.use(express.json());
-app.use('/', usersRoute)
-app.use('/', setbalRoute)
-app.use('/', loginRoute)
-app.use('/', registerRoute)
+app.use('/api', usersRoute)
+app.use('/api', setbalRoute)
+app.use('/api', loginRoute)
+app.use('/api', registerRoute)
+
+app.use(express.static(path.join(__dirname)))
+
+
+
+
+
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)

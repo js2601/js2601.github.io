@@ -11,7 +11,7 @@ const boardHeight = 250;
 const boardTop = height/2+60;
 const boardLeft = width/2-boardWidth/2;
 let canSpin = true;
-let credits = 1000;
+var credits;
 let wheelRotationAngle = 0
 let ballRotationAngle = 0;
 let ballSpinSpeed = baseSpinSpeed;
@@ -29,6 +29,7 @@ window.addEventListener('mousemove',getMousePos);
 window.addEventListener('mousedown',placeChip);
 
 function main() {
+    credits = fetchBalance();
     document.getElementById("credits").innerHTML = "Credits: " + credits;
     createBoardCoords();
 }
@@ -382,6 +383,8 @@ function checkWin() {
             console.log(chipNum);
         }
     }
+
+    updateBalance(credits);
 }
 
 function clearChips() {

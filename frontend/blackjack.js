@@ -1,5 +1,5 @@
 // Constants & Vars:
-const url = `https://js2601githubio-production.up.railway.app:8080/`
+const url = 'https://js2601githubio-production.up.railway.app:8080/api'
 var dealer1;
 var dealer2;
 var player1;
@@ -21,6 +21,7 @@ var deck = ["AC","KC","QC","JC","10C","9C","8C","7C","6C","5C","4C","3C","2C","A
 var player = [];
 var dealer = [];
 const values = new Map();
+import { fetchBalance, updateBalance } from './utils.js';
 
 async function populateMap() {
     for (card of deck) {
@@ -97,6 +98,7 @@ async function getHandValue(hand) {
 }
 
 async function updateCredits() {
+    credits = await fetchBalance();
     credittext.innerHTML = "Current Credits: " + credits;
 }
 
@@ -226,6 +228,7 @@ async function gameStart() {
             credits = Number(credits) + 1.5*Number(betValue);
             await delay(1000);
             document.body = originalState;
+            await updateBalance(credits);
             main();
         }
         else if (await getHandValue(dealer) == 21) {
@@ -233,6 +236,7 @@ async function gameStart() {
             credits = Number(credits) - Number(betValue);
             await delay(1000);
             document.body = originalState;
+            await updateBalance(credits);
             main();
         }
         canHit = 1;

@@ -1,3 +1,6 @@
+import { fetchBalance, updateBalance } from './utils.js';
+
+
 //define constants
 
 const ballSize = 12;
@@ -5,7 +8,7 @@ const pegSize = 7;
 const pegAmt = 11;
 const multWidth = 50;
 const bounciness = 0.5;
-var credits = 1000;
+var credits;
 //Init Physics Engine
 
 var Engine = Matter.Engine, Render = Matter.Render, Runner = Matter.Runner, Bodies = Matter.Bodies, Events = Matter.Events, Composite = Matter.Composite, World = Matter.World;
@@ -66,6 +69,7 @@ function deleteBall(ball,mult) {
     credits = Number(credits) + Number((betVal*mult));
     console.log(credits);
     credits = Number(credits).toFixed(1);
+    updateBalance(credits);
     document.getElementById("credits").innerHTML = `Credits: ${credits}`;
     World.remove(engine.world, ball);
 }
@@ -121,6 +125,7 @@ function draw() {
 
 Events.on(render,'afterRender',draw);
 
+credits = await fetchBalance();
 document.getElementById("credits").innerHTML = "Credits: " + credits;
 createPegs(pegAmt);
 createMults();

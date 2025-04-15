@@ -24,13 +24,13 @@ router.post('/login', (req, res) => {
         });
 
         if (foundArray === undefined) {
-            res.send({success: false, error: "Authentication failed"});
+            res.status(400).send({success: false, error: "Authentication failed"});
             return;
         } else {
             bcrypt.compare(password, foundArray.password, (err, result) => {
                 if (err) {
                     console.error(error);
-                    res.send({success: false, error: err});
+                    res.status(400).send({success: false, error: err});
                     return
                 }
 
@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
                     const token = jwt.sign({username: username}, 'test', {expiresIn: '1h'});
                     res.json({ token });
                 } else {
-                    res.send({success: false});
+                    res.status(400).send({success: false});
                 }
             })
         }
