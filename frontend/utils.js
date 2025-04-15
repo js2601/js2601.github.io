@@ -6,7 +6,7 @@ export async function fetchBalance() {
     }
 
     try {
-      const res = await fetch('https://js2601githubio-production.up.railway.app:8080/api/', {
+      const res = await fetch('http://js2601-github-io.railway.internal/api/', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -32,7 +32,7 @@ export async function updateBalance(amount) {
     }
 
     try {
-        const res = await fetch(`https://js2601githubio-production.up.railway.app:8080/api/setbal/${amount}`, {
+        const res = await fetch(`http://js2601-github-io.railway.internal/api/setbal/${amount}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
