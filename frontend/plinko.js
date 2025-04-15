@@ -32,57 +32,59 @@ var runner = Runner.create();
 Runner.run(runner, engine);
 
 
-async function fetchBalance() {
+function fetchBalance(callback) {
     const token = localStorage.getItem('jwt');
     if (!token) {
       console.error('No JWT found');
       return;
     }
-
-    try {
-      const res = await fetch('https://js2601githubio-production.up.railway.app/api', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      const data = await res.json();
-      if (res.ok) {
+  
+    fetch('https://js2601githubio-production.up.railway.app/api', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json().then(data => ({ ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (ok) {
+        const credits = parseFloat(data.balance);
         console.log('Credits:', credits);
-        return parseFloat(data.balance);
+        callback(credits); 
       } else {
         console.error('API error:', data);
       }
-    } catch (err) {
+    })
+    .catch(err => {
       console.error('Fetch error:', err);
-    }
-}
+    });
+  }
+  
 
-async function updateBalance(amount) {
+function updateBalance(amount) {
     const token = localStorage.getItem('jwt');
     if (!token) {
-        console.error('No JWT found');
-        return;
+      console.error('No JWT found');
+      return;
     }
-
-    try {
-        const res = await fetch('https://js2601githubio-production.up.railway.app/api', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-        });
-
-        const data = await res.json();
-        if (res.ok) {
+  
+    fetch(`https://js2601githubio-production.up.railway.app/api/setbal/${amount}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json().then(data => ({ status: res.status, ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (ok) {
         console.log(`Balance updated to ${amount}`, data);
-        } else {
+      } else {
         console.error('Update failed:', data);
-        }
-    } catch (err) {
-        console.error('Fetch error:', err);
-    }
-}
+      }
+    })
+    .catch(err => {
+      console.error('Fetch error:', err);
+    });
+  }
 
 
 
@@ -181,8 +183,10 @@ function draw() {
 
 Events.on(render,'afterRender',draw);
 
-credits = await fetchBalance();
-document.getElementById("credits").innerHTML = "Credits: " + credits;
+fetchBalance((cred) => {
+    credits = cred;
+    document.getElementById("credits").innerHTML = "Credits: " + credits;
+})
 createPegs(pegAmt);
 createMults();
 

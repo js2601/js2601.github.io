@@ -152,7 +152,8 @@ async function getHandValue(hand) {
 }
 
 async function updateCredits() {
-    credits = await fetchBalance();
+    await updateBalance(credits);
+    credits = await fetchBalance(credits);
     credittext.innerHTML = "Current Credits: " + credits;
 }
 
