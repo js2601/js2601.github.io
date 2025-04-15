@@ -452,7 +452,7 @@ function clearChips() {
 
 function findDupes(coord) {
     for (let chip of chipCoords) {
-        if (chip[3] == coord) {
+        if (chip[3] == coord) { // index on board coordinates
             return chipCoords.indexOf(chip);
         }
     }
