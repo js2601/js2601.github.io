@@ -1,6 +1,6 @@
 //define constants
 
-const ballSize = 12;
+const ballSize = 11.5;
 const pegSize = 7;
 const pegAmt = 11;
 const multWidth = 50;

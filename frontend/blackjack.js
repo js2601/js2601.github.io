@@ -11,7 +11,7 @@ var playertext;
 var credittext;
 var originalState;
 var betInput;
-var credits;
+var credits = 1000;
 var playedTheseGamesBefore = 0;
 var canHit = 0;
 let betValue;
