@@ -57,7 +57,7 @@ async function updateBalance(amount) {
     }
 
     try {
-        const res = await fetch('https://js2601githubio-production.up.railway.app/api', {
+        const res = await fetch(`https://js2601githubio-production.up.railway.app/api/setbal/${amount}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
