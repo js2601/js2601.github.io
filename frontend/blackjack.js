@@ -1,5 +1,5 @@
 // Constants & Vars:
-const url = `https://js2601githubio-production.up.railway.app:8080/`
+const url = 'https://js2601githubio-production.up.railway.app:8080/api'
 var dealer1;
 var dealer2;
 var player1;
@@ -21,6 +21,61 @@ var deck = ["AC","KC","QC","JC","10C","9C","8C","7C","6C","5C","4C","3C","2C","A
 var player = [];
 var dealer = [];
 const values = new Map();
+
+
+async function fetchBalance() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      console.error('No JWT found');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://js2601githubio-production.up.railway.app/api', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log('Credits:', credits);
+        return parseFloat(data.balance);
+      } else {
+        console.error('API error:', data);
+      }
+    } catch (err) {
+      console.error('Fetch error:', err);
+    }
+}
+
+async function updateBalance(amount) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+        console.error('No JWT found');
+        return;
+    }
+
+    try {
+        const res = await fetch(`https://js2601githubio-production.up.railway.app/api/setbal/${amount}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+        console.log(`Balance updated to ${amount}`, data);
+        } else {
+        console.error('Update failed:', data);
+        }
+    } catch (err) {
+        console.error('Fetch error:', err);
+    }
+}
+
+
 
 async function populateMap() {
     for (card of deck) {
@@ -97,6 +152,7 @@ async function getHandValue(hand) {
 }
 
 async function updateCredits() {
+    credits = await fetchBalance(credits);
     credittext.innerHTML = "Current Credits: " + credits;
 }
 
@@ -226,6 +282,7 @@ async function gameStart() {
             credits = Number(credits) + 1.5*Number(betValue);
             await delay(1000);
             document.body = originalState;
+            await updateBalance(credits);
             main();
         }
         else if (await getHandValue(dealer) == 21) {
@@ -233,8 +290,10 @@ async function gameStart() {
             credits = Number(credits) - Number(betValue);
             await delay(1000);
             document.body = originalState;
+            await updateBalance(credits);
             main();
         }
         canHit = 1;
     }
 }
+

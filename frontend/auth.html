@@ -4,11 +4,41 @@
   <meta charset="UTF-8">
   <title>Login / Register</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #111; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .container { background: #222; padding: 20px; border-radius: 8px; width: 300px; }
-    input, button { width: 100%; padding: 10px; margin: 10px 0; }
-    button { cursor: pointer; }
-    .toggle { text-align: center; cursor: pointer; color: #0af; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #222;
+      padding: 20px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 320px;
+      box-sizing: border-box;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+    button {
+      cursor: pointer;
+    }
+    .toggle {
+      text-align: center;
+      cursor: pointer;
+      color: #0af;
+      font-size: 0.9em;
+    }
   </style>
 </head>
 <body>
@@ -19,46 +49,47 @@
     <button id="submit-btn">Login</button>
     <div class="toggle" onclick="toggleForm()">Don't have an account? Register</div>
     <p id="status"></p>
-    <div id="log" style="margin-top: 10px; font-size: 0.9em; color: #ccc;"></div>
   </div>
 
   <script>
     let isRegister = false;
-
-    function log(msg) {
-      const el = document.getElementById('log');
-      el.innerHTML += `<div> ${msg}</div>`;
-    }
 
     function toggleForm() {
       isRegister = !isRegister;
       document.getElementById('form-title').textContent = isRegister ? 'Register' : 'Login';
       document.getElementById('submit-btn').textContent = isRegister ? 'Register' : 'Login';
       document.querySelector('.toggle').textContent = isRegister ? 'Already have an account? Login' : "Don't have an account? Register";
+      console.log(`Form toggled. Now in ${isRegister ? 'Register' : 'Login'} mode.`);
     }
 
     document.getElementById('submit-btn').addEventListener('click', async () => {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
 
-      const url = 'https://js2601githubio-production.up.railway.app:8080';
+      const url = 'https://js2601githubio-production.up.railway.app/api'
       const route = isRegister ? '/register' : '/login';
+      
+      console.log(`Sending request to ${url + route}`, { username: user, password: pass });
 
-      log(`Sending request to ${url + route}`);
-      const res = await fetch(`${url + route}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, password: pass })
-      });
+      try {
+        const res = await fetch(url + route, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        });
 
-      const data = await res.json();
-      log(`Response: ${JSON.stringify(data)}`);
-      document.getElementById('status').textContent = data.message || (res.ok ? 'Success' : 'Failed');
+        const data = await res.json();
+        console.log('Response:', data);
+        document.getElementById('status').textContent = data.message || (res.ok ? 'Success' : 'Failed');
 
-      if (res.ok && !isRegister && data.token) {
-        localStorage.setItem('jwt', data.token);
-        log('JWT stored in localStorage. Redirecting...');
-        window.location.href = 'frontend/';
+        if (res.ok && !isRegister && data.token) {
+          localStorage.setItem('jwt', data.token);
+          console.log('JWT stored:', data.token);
+          window.location.href = '../index.html';
+        }
+      } catch (error) {
+        console.log('Fetch error:', error);
+        document.getElementById('status').textContent = 'Request failed';
       }
     });
   </script>

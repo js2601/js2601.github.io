@@ -1,3 +1,7 @@
+
+
+
+
 //define constants
 
 const ballSize = 11.5;
@@ -5,7 +9,7 @@ const pegSize = 7;
 const pegAmt = 11;
 const multWidth = 50;
 const bounciness = 0.5;
-var credits = 1000;
+var credits;
 //Init Physics Engine
 
 var Engine = Matter.Engine, Render = Matter.Render, Runner = Matter.Runner, Bodies = Matter.Bodies, Events = Matter.Events, Composite = Matter.Composite, World = Matter.World;
@@ -26,6 +30,62 @@ var render = Render.create({
 Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
+
+
+function fetchBalance(callback) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      console.error('No JWT found');
+      return;
+    }
+  
+    fetch('https://js2601githubio-production.up.railway.app/api', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json().then(data => ({ ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (ok) {
+        const credits = parseFloat(data.balance);
+        console.log('Credits:', credits);
+        callback(credits); 
+      } else {
+        console.error('API error:', data);
+      }
+    })
+    .catch(err => {
+      console.error('Fetch error:', err);
+    });
+  }
+  
+
+function updateBalance(amount) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      console.error('No JWT found');
+      return;
+    }
+  
+    fetch(`https://js2601githubio-production.up.railway.app/api/setbal/${amount}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json().then(data => ({ status: res.status, ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (ok) {
+        console.log(`Balance updated to ${amount}`, data);
+      } else {
+        console.error('Update failed:', data);
+      }
+    })
+    .catch(err => {
+      console.error('Fetch error:', err);
+    });
+  }
+
+
 
 //Plinko Functions
 
@@ -66,6 +126,7 @@ function deleteBall(ball,mult) {
     credits = Number(credits) + Number((betVal*mult));
     console.log(credits);
     credits = Number(credits).toFixed(1);
+    updateBalance(credits);
     document.getElementById("credits").innerHTML = `Credits: ${credits}`;
     World.remove(engine.world, ball);
 }
@@ -121,6 +182,10 @@ function draw() {
 
 Events.on(render,'afterRender',draw);
 
-document.getElementById("credits").innerHTML = "Credits: " + credits;
+fetchBalance((cred) => {
+    credits = cred;
+    document.getElementById("credits").innerHTML = "Credits: " + credits;
+})
 createPegs(pegAmt);
 createMults();
+

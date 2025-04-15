@@ -1,9 +1,16 @@
 <head>
-    <title>Gamble Game</title>
+    <title>Fun Game</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script>
+        const token = localStorage.getItem('jwt');
+        if (!token) {
+        window.location.href = 'frontend/auth.html';
+        }
+    </script>
     <script src="script.js"></script>
 </head>
-<body onload= "registerUser()">
+<body>
     <div id="mainscreentitle">Fun Game!</div>
     <a id="blackjacklink" href="frontend/blackjack.html"><img id="blackjacklogo"src="frontend/assets/BlackjackLogo.png"/></a>
     <a id="plinkolink" href="frontend/plinko.html"><img id="plinkologo" src="frontend/assets/PlinkoLogo.png"/></a>

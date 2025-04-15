@@ -11,7 +11,7 @@ const boardHeight = 250;
 const boardTop = height/2+60;
 const boardLeft = width/2-boardWidth/2;
 let canSpin = true;
-let credits = 1000;
+var credits;
 let wheelRotationAngle = 0
 let ballRotationAngle = 0;
 let ballSpinSpeed = baseSpinSpeed;
@@ -28,8 +28,67 @@ window.addEventListener('load', draw);
 window.addEventListener('mousemove',getMousePos);
 window.addEventListener('mousedown',placeChip);
 
+
+function fetchBalance(callback) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      console.error('No JWT found');
+      return;
+    }
+  
+    fetch('https://js2601githubio-production.up.railway.app/api', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json().then(data => ({ ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (ok) {
+        const credits = parseFloat(data.balance);
+        console.log('Credits:', credits);
+        callback(credits); 
+      } else {
+        console.error('API error:', data);
+      }
+    })
+    .catch(err => {
+      console.error('Fetch error:', err);
+    });
+  }
+  
+
+function updateBalance(amount) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      console.error('No JWT found');
+      return;
+    }
+  
+    fetch(`https://js2601githubio-production.up.railway.app/api/setbal/${amount}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json().then(data => ({ status: res.status, ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (ok) {
+        console.log(`Balance updated to ${amount}`, data);
+      } else {
+        console.error('Update failed:', data);
+      }
+    })
+    .catch(err => {
+      console.error('Fetch error:', err);
+    });
+  }
+
+
+
 function main() {
-    document.getElementById("credits").innerHTML = "Credits: " + credits;
+    fetchBalance((cred) => {
+        credits = cred;
+        document.getElementById("credits").innerHTML = "Credits: " + credits;
+    })
     createBoardCoords();
 }
 
@@ -382,6 +441,8 @@ function checkWin() {
             console.log(chipNum);
         }
     }
+
+    updateBalance(credits);
 }
 
 function clearChips() {

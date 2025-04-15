@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
-const { errorMonitor } = require('stream');
 const router = express.Router();
 
 router.post('/register', (req, res) => {
