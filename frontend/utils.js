@@ -1,4 +1,3 @@
-const port = process.env.PORT || 3000;
 
 export async function fetchBalance() {
     const token = localStorage.getItem('jwt');
@@ -8,7 +7,7 @@ export async function fetchBalance() {
     }
 
     try {
-      const res = await fetch(`http://js2601-github-io.railway.internal:${port}/api/`, {
+      const res = await fetch(`http://js2601-github-io.railway.internal:8080/api/`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -34,7 +33,7 @@ export async function updateBalance(amount) {
     }
 
     try {
-        const res = await fetch(`http://js2601-github-io.railway.internal:${port}/api/setbal/${amount}`, {
+        const res = await fetch(`http://js2601-github-io.railway.internal:8080/api/setbal/${amount}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
