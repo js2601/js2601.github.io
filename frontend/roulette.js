@@ -65,7 +65,6 @@ function updateBalance(amount) {
     }
   
     fetch(`https://js2601githubio-production.up.railway.app/api/setbal/${amount}`, {
-      method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
       }
