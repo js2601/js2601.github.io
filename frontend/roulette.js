@@ -427,7 +427,7 @@ function checkWin() {
         else if (chipNum < 43 && Math.ceil(ballPos/12) == chipNum-39 && ballPos != 0) {
             credits += chipVal*2;
         }
-        else if ((chipNum == 43 || chipNum == 48) && Math.ceil(ballPos/18) == chipNum%2 && ballPos != 0) {
+        else if ((chipNum == 43 || chipNum == 48) && Math.ceil(ballPos/18) - 1 == (chipNum+1)%2 && ballPos != 0) {
             credits += chipVal;
         }
         else if ((chipNum == 44 || chipNum == 47) && ballPos%2 == chipNum%2 && ballPos != 0) {
