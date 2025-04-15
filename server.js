@@ -33,6 +33,6 @@ app.use(express.static(path.join(__dirname)))
 
 
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`)
-  })
+app.listen(port, '::', () => {
+  console.log(`Server listening on [::]${port}`);
+});
