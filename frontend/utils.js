@@ -1,5 +1,5 @@
 
-export async function fetchBalance() {
+async function fetchBalance() {
     const token = localStorage.getItem('jwt');
     if (!token) {
       console.error('No JWT found');
@@ -25,7 +25,7 @@ export async function fetchBalance() {
     }
 }
 
-export async function updateBalance(amount) {
+async function updateBalance(amount) {
     const token = localStorage.getItem('jwt');
     if (!token) {
         console.error('No JWT found');

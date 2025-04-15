@@ -28,6 +28,61 @@ window.addEventListener('load', draw);
 window.addEventListener('mousemove',getMousePos);
 window.addEventListener('mousedown',placeChip);
 
+
+async function fetchBalance() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      console.error('No JWT found');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://js2601githubio-production.up.railway.app/api', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log('Credits:', credits);
+        return parseFloat(data.balance);
+      } else {
+        console.error('API error:', data);
+      }
+    } catch (err) {
+      console.error('Fetch error:', err);
+    }
+}
+
+async function updateBalance(amount) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+        console.error('No JWT found');
+        return;
+    }
+
+    try {
+        const res = await fetch('https://js2601githubio-production.up.railway.app/api', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+        console.log(`Balance updated to ${amount}`, data);
+        } else {
+        console.error('Update failed:', data);
+        }
+    } catch (err) {
+        console.error('Fetch error:', err);
+    }
+}
+
+
+
 function main() {
     credits = fetchBalance();
     document.getElementById("credits").innerHTML = "Credits: " + credits;
@@ -408,8 +463,3 @@ function getChipSum() {
     }
     return sum;
 }
-
-window.main = main;
-window.spinWheel = spinWheel;
-window.addChip = addChip;
-window.clearChips = clearChips;
