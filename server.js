@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 const allowedIPs = ['185.199.108.153', '185.199.109.153', '185.199.110.153', 
   '185.199.111.153'];
@@ -19,7 +20,7 @@ const registerRoute = require('./backend/routes/register.js')
 //     res.status(403).send('Forbidden')
 //   }
 // })
-
+app.use(cors());
 app.use(express.json());
 app.use('/api', usersRoute)
 app.use('/api', setbalRoute)
