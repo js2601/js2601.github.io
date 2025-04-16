@@ -36,7 +36,7 @@ router.post('/login', (req, res) => {
 
                 if (result) {
                     // const token = jwt.sign({username: username}, process.env.secret, {expiresIn: '1h'});
-                    const token = jwt.sign({username: username}, 'test', {expiresIn: '1h'});
+                    const token = jwt.sign({username: username}, 'test');
                     res.json({ token });
                 } else {
                     res.status(400).send({success: false});
